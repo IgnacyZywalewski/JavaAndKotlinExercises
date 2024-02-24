@@ -1,5 +1,5 @@
 public class Main {
-    public static String z1(int arg){
+    public static String checkDivisibility(int arg){
         StringBuilder ans = new StringBuilder();
         int[] numbers = {3, 5, 7, 11, 13, 15, 21};
 
@@ -19,6 +19,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        System.out.println(z1(15015));
+        System.out.println(checkDivisibility(15015));
     }
 }
