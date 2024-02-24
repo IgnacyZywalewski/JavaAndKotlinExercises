@@ -1,6 +1,6 @@
 fun checkDivisibility(arg : Int): String {
-    val numbers = arrayOf(3, 5, 7, 11, 13, 15, 21)
-    var ans = ""
+    val numbers = intArrayOf(3, 5, 7, 11, 13, 15, 21)
+    var ans: String = ""
 
     for (num in numbers){
         if(arg % num == 0){
