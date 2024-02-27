@@ -44,7 +44,7 @@ public class Main {
         }
         return true;
     }
-    public static void printPascal(Integer height){
+    public static void printPascal(int height){
         for (int line = 1; line <= height; line++) {
             for (int j = 0; j <= height - line; j++) {
                 System.out.print(" ");
