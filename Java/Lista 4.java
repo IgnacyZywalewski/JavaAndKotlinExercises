@@ -18,9 +18,7 @@ public class Main {
                 .flatMap(Collection::stream)
                 .collect(
                         HashMap::new,
-                        (map, element) -> {
-                            map.merge(element, 1, Integer::sum);
-                        },
+                        (map, element) -> map.merge(element, 1, Integer::sum),
                         HashMap::putAll
                 );
     }
