@@ -1,5 +1,6 @@
 import java.util.*;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -58,45 +59,48 @@ public class Main {
     }
 
     public static List<List<Integer>> perm(List<Integer> inputList){
-        if (inputList.isEmpty()) {
-            return Collections.singletonList(Collections.emptyList());
-        }
+        return inputList.isEmpty() ? Collections.singletonList(Collections.emptyList()) :
+                IntStream.range(0, inputList.size())
+                        .mapToObj(i -> {
+                            int current = inputList.get(i);
+                            List<Integer> remaining = new ArrayList<>(inputList);
+                            remaining.remove(i);
+                            return perm(remaining).stream().map(permutation -> {
+                                List<Integer> newList = new ArrayList<>();
+                                newList.add(current);
+                                newList.addAll(permutation);
+                                return newList;
+                            });
+                        })
+                        .flatMap(Function.identity())
+                        .collect(Collectors.toList());
 
-        List<List<Integer>> result = new ArrayList<>();
-
-        for (int i = 0; i < inputList.size(); i++) {
-            int current = inputList.get(i);
-            List<Integer> remaining = new ArrayList<>(inputList);
-            remaining.remove(i);
-            List<List<Integer>> permutations = perm(remaining);
-            for (List<Integer> permutation : permutations) {
-                List<Integer> newList = new ArrayList<>();
-                newList.add(current);
-                newList.addAll(permutation);
-                result.add(newList);
-            }
-        }
-
-        return result;
     }
 
     public static int check (Integer N, List<Integer> inputList){
         Set<Integer> preamble = new HashSet<>(inputList.subList(0, N));
+        int preambleStart = 0;
+        int num;
+        boolean found;
 
         for (int i = N; i < inputList.size(); i++) {
-            boolean found = false;
-            for (int j = 0; j < N; j++) {
-                int num1 = inputList.get(i-1) - inputList.get(j);
-                if (preamble.contains(num1) && inputList.get(j) != num1) {
-                    found = true;
-                    break;
+            found = false;
+            for (int j = preambleStart; j < N - 1 + preambleStart; j++) {
+                for(int k = j + 1; k < N + preambleStart; k++){
+                    num = inputList.get(j) + inputList.get(k);
+                    if (inputList.get(i).equals(num)) {
+                        found = true;
+                        break;
+                    }
                 }
+                if(found) break;
             }
-            if (!found) {
-                return inputList.get(i);
-            }
+
+            if (!found) return inputList.get(i);
+
             preamble.remove(inputList.get(i - N));
             preamble.add(inputList.get(i));
+            preambleStart++;
         }
 
         return -1;
