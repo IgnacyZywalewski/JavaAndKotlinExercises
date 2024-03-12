@@ -9,12 +9,11 @@ public class Main {
                 System.out.println("Występuje liczba ujemna");
                 return -1;
             }
-
             map.put(num, map.getOrDefault(num, 0) + 1);
         }
 
         if(map.size() != tab.length){
-            System.out.println("Wysępuje element powtarzający się");
+            System.out.println("Występuje element powtarzający się");
             return -1;
         }
 
@@ -49,23 +48,22 @@ public class Main {
             for (int j = 0; j <= height - line; j++) {
                 System.out.print(" ");
             }
-
-            int C = 1;
-
+            int c = 1;
             for (int i = 1; i <= line; i++) {
-                System.out.print(C + " ");
-                C = C * (line - i) / i;
+                System.out.print(c + " ");
+                c = c * (line - i) / i;
             }
-
             System.out.println();
         }
     }
 
     public static void main(String[] args) {
         int[] numbers = new int[]{0, 1, 2, 3, 4, 5};
-
         System.out.println(missingNumber(numbers));
-        System.out.println(isPalindrome("abba"));
+
+        String word = "abba";
+        System.out.println(isPalindrome(word));
+
         printPascal(4);
     }
 }
