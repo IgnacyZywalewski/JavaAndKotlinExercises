@@ -34,6 +34,7 @@ public class Main {
 
         return missingNumber;
     }
+    
     public static Boolean isPalindrome(String word){
         int n = word.length();
         for(int i = 0; i < n/2; i++){
@@ -43,6 +44,7 @@ public class Main {
         }
         return true;
     }
+    
     public static void printPascal(int height){
         for (int line = 1; line <= height; line++) {
             for (int j = 0; j <= height - line; j++) {
@@ -58,12 +60,15 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        int[] numbers = new int[]{0, 1, 2, 3, 4, 5};
+        //Zadanie 1
+        int[] numbers = new int[]{2, 4, 5, 3, 0, 6};
         System.out.println(missingNumber(numbers));
 
+        //Zadanie 2
         String word = "abba";
         System.out.println(isPalindrome(word));
 
+        //Zadanie 3
         printPascal(4);
     }
 }
