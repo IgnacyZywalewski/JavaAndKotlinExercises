@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 public class Main {
 
@@ -36,24 +37,63 @@ public class Main {
         return result;
     }
 
+    public static <T> List<T> tailToHead(List<T> list){
+        if (list == null || list.isEmpty()){
+            throw new IllegalStateException("Empty list");
+        }
+
+        T temp = list.getFirst();
+        list.set(0, list.getLast());
+        list.set(list.size() - 1, temp);
+
+        return list;
+    }
+
+    public static <T> List<T> setHead(List<T> list, T newHead){
+        list.set(0, newHead);
+        return list;
+    }
+
+    public static <T> List<T> dropWhile(List<T> list, Predicate<T> predicate){
+        List<T> result = new ArrayList<>(list);
+        int n = result.size();
+        for (int i = 0; i < n; i++) {
+            if (!predicate.test(result.get(i))){
+                break;
+            }
+            result.remove(i);
+            i--;
+            n--;
+        }
+        return result;
+    }
 
     public static void main(String[] args) {
-        List<Integer> intList = List.of(1, 2, 3, 4, 5);
-        List<String> stringList = Arrays.asList("apple", "banana", "cherry");
-        List<Number> numbers = List.of(1, 2, 3.5, 5, -6, 1, 1);
+        List<Integer> numList = List.of(1, 2, 3, 4, 5);
 
         //Zadanie 1
-        System.out.println("Head: " + getHead(intList));
-        System.out.println("Tail: " + getTail(intList));
+        System.out.println("Head: " + getHead(numList));
+        System.out.println("Tail: " + getTail(numList));
 
         //Zadanie 2
         BiPredicate<Integer, Integer> isAscending = (a, b) -> a <= b;
-        System.out.println(isSorted(intList, isAscending));
+        System.out.println(isSorted(numList, isAscending));
 
         BiPredicate<String, String> isLexicographic = (a, b) -> a.compareTo(b) <= 0;
-        System.out.println(isSorted(stringList, isLexicographic));
+        System.out.println(isSorted(Arrays.asList("apple", "banana", "cherry"), isLexicographic));
 
         //Zadanie 3
-        System.out.println(square(numbers));
+        System.out.println(square(List.of(1, 2, 3.5, 5, -6, 1, 1)));
+
+        //Zadanie 4
+        System.out.println(tailToHead(Arrays.asList(1, 2, 3)));
+
+        //Zadanie 5
+        System.out.println(setHead(Arrays.asList(1, 2, 3), 5));
+
+        //Zadanie 6
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 3, 2, 1, 9);
+        Predicate<Integer> lessThanThree = (i) -> i < 3;
+        System.out.println(dropWhile(list, lessThanThree));
     }
 }
