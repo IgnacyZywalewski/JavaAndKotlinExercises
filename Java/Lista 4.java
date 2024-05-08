@@ -58,19 +58,20 @@ public class Main {
                             int current = inputList.get(i);
                             List<Integer> remaining = new ArrayList<>(inputList);
                             remaining.remove(i);
-                            return perm(remaining).stream().map(permutation -> {
-                                List<Integer> newList = new ArrayList<>();
-                                newList.add(current);
-                                newList.addAll(permutation);
-                                return newList;
-                            });
+                            return perm(remaining).stream()
+                                    .map(permutation -> {
+                                        List<Integer> newList = new ArrayList<>();
+                                        newList.add(current);
+                                        newList.addAll(permutation);
+                                        return newList;
+                                    });
                         })
                         .flatMap(Function.identity())
                         .collect(Collectors.toList());
 
     }
     public static int check(Integer N, List<Integer> inputList){
-        Set<Integer> preamble = new HashSet<>(inputList.subList(0, N));
+        Set<Integer> preamble = new HashSet<>(inputList);
         int preambleStart = 0;
         int num;
         boolean found;
