@@ -6,12 +6,14 @@ import java.util.stream.IntStream;
 
 public class Main {
     public static BiFunction<String, Integer, String> duplicate = (s, i) -> String.valueOf(s).repeat(i);
+
     public static int suma(List<Integer> list){
         return list.stream()
                 .filter(num -> num > 0)
                 .mapToInt(Integer::intValue)
                 .sum();
     }
+
     public static Map<String, Long> countElements(List<List<String>> inputlist){
         return inputlist.stream()
                 .flatMap(List::stream)
@@ -20,6 +22,7 @@ public class Main {
                         Collectors.counting()
                 ));
     }
+
     public static List<Integer> evenPositiveSquare(List<Integer> inputList){
         return IntStream.range(0, inputList.size())
                 .filter(i -> i % 2 != 0)
@@ -28,6 +31,7 @@ public class Main {
                 .map(x -> x * x)
                 .collect(Collectors.toList());
     }
+
     public static List<List<Object>> srt(List<String> inputList){
         Set<Character> firstLetters = inputList.stream()
                 .map(s -> s.charAt(0))
@@ -51,6 +55,7 @@ public class Main {
         }
         return result;
     }
+
     public static List<List<Integer>> perm(List<Integer> inputList){
         return inputList.isEmpty() ? Collections.singletonList(Collections.emptyList()) :
                 IntStream.range(0, inputList.size())
@@ -70,6 +75,7 @@ public class Main {
                         .collect(Collectors.toList());
 
     }
+
     public static int check(Integer N, List<Integer> inputList){
         Set<Integer> preamble = new HashSet<>(inputList);
         int preambleStart = 0;
@@ -98,6 +104,7 @@ public class Main {
 
         return -1;
     }
+    
 
     public static void main(String[] args) {
         //Zadanie 1
