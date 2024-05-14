@@ -6,14 +6,15 @@ import java.util.function.Predicate;
 
 public class Main {
 
+    //Zadanie 1
     public static <T> List<T> getTail(List<T> list) {
         return list.subList(1, list.size());
     }
-
     public static <T> T getHead(List<T> list) {
         return list.getFirst();
     }
 
+    //Zadanie 2
     public static <T> boolean isSorted(List<T> list, BiPredicate<T, T> ordered) {
         for (int i = 0; i < list.size() - 1; i++) {
             T current = list.get(i);
@@ -25,6 +26,7 @@ public class Main {
         return true;
     }
 
+    //Zadanie 3
     public static List<Number> square(List<Number> numbers) {
         List<Number> result = new ArrayList<>();
         for (int i = 1; i < numbers.size(); i += 2) {
@@ -37,6 +39,7 @@ public class Main {
         return result;
     }
 
+    //Zadanie 4
     public static <T> List<T> tailToHead(List<T> list){
         if (list == null || list.isEmpty()){
             throw new IllegalStateException("Empty list");
@@ -49,11 +52,13 @@ public class Main {
         return list;
     }
 
+    //Zadanie 5
     public static <T> List<T> setHead(List<T> list, T newHead){
         list.set(0, newHead);
         return list;
     }
 
+    //Zadanie 6
     public static <T> List<T> dropWhile(List<T> list, Predicate<T> predicate){
         List<T> result = new ArrayList<>(list);
         int n = result.size();
@@ -67,6 +72,7 @@ public class Main {
         }
         return result;
     }
+
 
     public static void main(String[] args) {
         List<Integer> numList = List.of(1, 2, 3, 4, 5);
