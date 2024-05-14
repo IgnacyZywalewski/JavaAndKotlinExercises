@@ -20,6 +20,7 @@ public class Main {
             return costType;
         }
     }
+
     public static class Cost {
         private final CostType type;
         private final LocalDate date;
@@ -43,6 +44,7 @@ public class Main {
             return amount;
         }
     }
+
     public static final class DataProvider {
         private DataProvider() {
         }
@@ -87,6 +89,7 @@ public class Main {
         }
 
     }
+
     public static class Car {
         private final String name;
         private final String brand;
@@ -133,7 +136,6 @@ public class Main {
         }
     }
 
-
     //Zadanie 1
     public static Map<Month, ArrayList<String>> groupedCostMap(ArrayList<Cost> costs){
         Map<Month, ArrayList<String>> map = new TreeMap<>();
@@ -168,24 +170,13 @@ public class Main {
 
 
     //Zadanie 3
-    public static class Pair<T, U>{
-        private final T first;
-        private final U second;
-        public Pair(T first, U second){
-            this.first = first;
-            this.second = second;
-        }
-        public T getFirst(){
-            return first;
-        }
-        public U getSecond(){
-            return second;
-        }
-        @Override
-        public String toString(){
+    public record Pair<T, U>(T first, U second) {
+    @Override
+        public String toString() {
             return "(" + first + ", " + second + ")";
         }
     }
+
     public static ArrayList<Pair<CostType, Integer>> getCarCosts(String name){
         ArrayList<Car> carList = DataProvider.getCars();
         ArrayList<Pair<CostType, Integer>> list = new ArrayList<>();
@@ -204,15 +195,17 @@ public class Main {
             list.add(new Pair<>(entry.getKey(), entry.getValue()));
         }
 
-        list.sort((p1, p2) -> p2.getSecond().compareTo(p1.getSecond()));
+        list.sort((p1, p2) -> p2.second().compareTo(p1.second()));
 
         return list;
     }
+
     public static void printCarCosts(ArrayList<Pair<CostType, Integer>> list){
         for(Pair<CostType, Integer> pair : list){
-            System.out.println(pair.getFirst() + " " + pair.getSecond() + " zł");
+            System.out.println(pair.first() + " " + pair.second() + " zł");
         }
     }
+
 
     //Zadanie 4
     public static HashMap<CostType, Integer> getFullCosts(ArrayList<Car> carList){
@@ -239,7 +232,7 @@ public class Main {
         System.out.println(groupedCostMap(DataProvider.getGeneralCosts(5)) + "\n");
 
         //Zadanie 2
-        printAllCosts(DataProvider.getGeneralCosts(12));
+        printAllCosts(DataProvider.getGeneralCosts(5));
 
         //Zadanie 3
         System.out.println();
