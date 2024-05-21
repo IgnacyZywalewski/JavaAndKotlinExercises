@@ -10,8 +10,7 @@ import java.util.concurrent.*;
 public class Main {
 
     //Zadanie 1
-    public static BigInteger factorial(int n) throws InterruptedException, ExecutionException {
-        int numThreads = Runtime.getRuntime().availableProcessors();
+    public static BigInteger factorial(int n, int numThreads) throws InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newFixedThreadPool(numThreads);
         List<Future<BigInteger>> futures = new ArrayList<>();
 
@@ -19,7 +18,7 @@ public class Main {
         for (int i = 0; i < numThreads; i++) {
             int start = i * range + 1;
             int end = (i == numThreads - 1) ? n : (i + 1) * range;
-            futures.add(executor.submit(new FactorialTask(start, end)));
+            futures.add(executor.submit(new factorialTask(start, end)));
         }
 
         BigInteger result = BigInteger.ONE;
@@ -30,8 +29,7 @@ public class Main {
         executor.shutdown();
         return result;
     }
-
-    private record FactorialTask(int start, int end) implements Callable<BigInteger> {
+    private record factorialTask(int start, int end) implements Callable<BigInteger> {
         @Override
             public BigInteger call() {
                 BigInteger result = BigInteger.ONE;
@@ -42,21 +40,23 @@ public class Main {
             }
         }
 
+
     //Zadanie 2
-    public static BigDecimal calculateEuler(int precision) {
+    public static BigDecimal calculateEulerNumber(int precision) {
         MathContext mc = new MathContext(precision, RoundingMode.HALF_UP);
         BigDecimal e = BigDecimal.ONE;
         BigDecimal factorial = BigDecimal.ONE;
 
-        for (int i = 1; i < precision * 10; i++) {
+        for (int i = 1; i < precision; i++) {
             factorial = factorial.multiply(BigDecimal.valueOf(i));
             BigDecimal term = BigDecimal.ONE.divide(factorial, mc);
             if (term.compareTo(BigDecimal.ZERO) == 0) break;
             e = e.add(term);
         }
 
-        return e.round(mc);
+        return e;
     }
+
 
     //Zadanie 3
     public static int[] findNumberWithMostDivisors(int range, int numThreads) throws InterruptedException, ExecutionException {
@@ -82,9 +82,8 @@ public class Main {
         }
 
         executor.shutdown();
-        return new int[]{maxDivisors, numberWithMaxDivisors};
+        return new int[]{numberWithMaxDivisors, maxDivisors};
     }
-
     private record DivisorsTask(int start, int end) implements Callable<int[]> {
 
         @Override
@@ -117,15 +116,16 @@ public class Main {
             }
         }
 
+
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         //Zadanie 1
-        System.out.println("Factorial of 5: " + factorial(5));
+        System.out.println("Factorial of 5: " + factorial(5, 5));
 
         //Zadanie 2
-        System.out.println("\nEuler's Number: " + calculateEuler(17));
+        System.out.println("\nEuler's Number: " + calculateEulerNumber(17));
 
         //Zadanie 3
-        int[] result = findNumberWithMostDivisors(100000, Runtime.getRuntime().availableProcessors());
+        int[] result = findNumberWithMostDivisors(100000, 5);
         System.out.println("\nNumber: " + result[0]);
         System.out.println("Number of divisors: " + result[1]);
     }
